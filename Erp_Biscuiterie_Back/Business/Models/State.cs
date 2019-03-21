@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace Erp_Biscuiterie_Back.Business.Models
 {
-    public partial class Role
+    public partial class State
     {
-        public Role()
+        public State()
         {
-            User = new HashSet<User>();
+            Order = new HashSet<Order>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<User> User { get; set; }
+        public ICollection<Order> Order { get; set; }
     }
 }

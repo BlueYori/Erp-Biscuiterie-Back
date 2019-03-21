@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Erp_Biscuiterie_Back/Erp_Biscuiterie_Back.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
