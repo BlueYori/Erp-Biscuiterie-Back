@@ -13,8 +13,7 @@ namespace Erp_Biscuiterie_Back.Business.Models
 
         // public DbSet<User> User { get; set; }
         // public DbSet<Role> Role { get; set; }
-
-                public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<Ingredient> Ingredient { get; set; }
         public virtual DbSet<IngredientDisponibily> IngredientDisponibily { get; set; }
         public virtual DbSet<Order> Order { get; set; }
