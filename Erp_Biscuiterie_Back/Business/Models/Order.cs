@@ -15,8 +15,8 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public int CustomerId { get; set; }
         public int StateId { get; set; }
 
-        public Customer Customer { get; set; }
-        public State State { get; set; }
-        public ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual State State { get; set; }
+        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

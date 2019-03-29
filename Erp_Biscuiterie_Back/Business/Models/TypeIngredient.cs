@@ -14,6 +14,6 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public string Unit { get; set; }
         public int Divider { get; set; }
 
-        public ICollection<Ingredient> Ingredient { get; set; }
+        public virtual ICollection<Ingredient> Ingredient { get; set; }
     }
 }

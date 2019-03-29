@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Erp_Biscuiterie_Back.Business.Models
 {
@@ -13,6 +14,9 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<User> User { get; set; }
+        //[JsonIgnore]
+        public virtual ICollection<User> User { get; set; }
+
+
     }
 }

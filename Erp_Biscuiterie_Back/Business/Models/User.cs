@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp_Biscuiterie_Back.Business.Models
 {
@@ -12,6 +13,6 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public string Password { get; set; }
         public int RoleId { get; set; }
 
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

@@ -26,7 +26,25 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.User.ToListAsync();
+            /*var userList = await (from user in _context.User
+                                  join role in _context.Role on user.RoleId equals role.Id into tmp
+                                  from m in tmp.DefaultIfEmpty()
+
+                                  select new User
+                                  {
+                                      Id = user.Id,
+                                      Firstname = user.Firstname,
+                                      Lastname = user.Lastname,
+                                      Email = user.Email,
+                                      Password = user.Password,
+                                      RoleId = m.Id,
+                                      Role = m
+                                 }
+                      ).ToListAsync();
+            return userList;*/
+            //var userList = await _context.User.ToListAsync();
+            var userList = await _context.User.Include(user => user.Role).ToListAsync();
+            return userList;
         }
 
         // GET api/user/5
