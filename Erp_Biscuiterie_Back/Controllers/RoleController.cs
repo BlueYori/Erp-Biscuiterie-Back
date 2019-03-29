@@ -25,7 +25,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRole()
         {
-            return await _context.Role.ToListAsync();
+            return await _context.Role.Include(role => role.User).ToListAsync();
         }
 
         // GET: api/Role/5

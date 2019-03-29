@@ -5,10 +5,12 @@ using Newtonsoft.Json;
 
 namespace Erp_Biscuiterie_Back.Business.Models
 {
-    public partial class Role : ShouldSerializeContractResolver
+    public partial class Role
     {
         public Role()
         {
+            ShouldSerializeContractResolver s = new ShouldSerializeContractResolver();
+
             User = new HashSet<User>();
         }
 
