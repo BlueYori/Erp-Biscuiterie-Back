@@ -13,6 +13,6 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public int Id { get; set; }
         public float Percentage { get; set; }
 
-        public ICollection<Customer> Customer { get; set; }
+        public virtual ICollection<Customer> Customer { get; set; }
     }
 }
