@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Erp_Biscuiterie_Back.Business.Helpers;
 using Newtonsoft.Json;
 
 namespace Erp_Biscuiterie_Back.Business.Models
 {
-    public partial class Role
+    public partial class Role : ShouldSerializeContractResolver
     {
         public Role()
         {
@@ -16,7 +17,6 @@ namespace Erp_Biscuiterie_Back.Business.Models
 
         //[JsonIgnore]
         public virtual ICollection<User> User { get; set; }
-
 
     }
 }
