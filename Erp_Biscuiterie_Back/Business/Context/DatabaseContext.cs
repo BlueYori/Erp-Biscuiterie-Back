@@ -1,7 +1,8 @@
 ﻿using System;
+using Erp_Biscuiterie_Back.Business.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Erp_Biscuiterie_Back.Business.Models
+namespace Erp_Biscuiterie_Back.Business.Context
 {
     public class DatabaseContext : DbContext
     {
@@ -30,7 +31,6 @@ namespace Erp_Biscuiterie_Back.Business.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("Server=localhost;Port=8889;User Id=root;Password=root;Database=biscuiterie");
             }
         }
