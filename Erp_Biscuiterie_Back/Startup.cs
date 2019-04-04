@@ -34,7 +34,7 @@ namespace Erp_Biscuiterie_Back
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalValue.SecretKey));
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalValue.SECRETKEY));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -47,8 +47,8 @@ namespace Erp_Biscuiterie_Back
                         ValidateIssuerSigningKey = true,
 
                         //data that will be used against provided token
-                        ValidIssuer = GlobalValue.Issuer,
-                        ValidAudience = GlobalValue.Audience,
+                        ValidIssuer = GlobalValue.ISSUER,
+                        ValidAudience = GlobalValue.AUDIENCE,
                         IssuerSigningKey = symmetricSecurityKey
                     };
                 });

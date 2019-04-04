@@ -20,7 +20,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         {
 
             //Security key for sign token and validate it later
-            string securityKey = GlobalValue.SecretKey;
+            string securityKey = GlobalValue.SECRETKEY;
 
             //Symmetric security key
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
@@ -37,8 +37,8 @@ namespace Erp_Biscuiterie_Back.Controllers
 
             //Create token
             var token = new JwtSecurityToken(
-                    issuer: GlobalValue.Issuer,
-                    audience: GlobalValue.Audience,
+                    issuer: GlobalValue.ISSUER,
+                    audience: GlobalValue.AUDIENCE,
                     expires: DateTime.Now.AddMinutes(20),
                     signingCredentials: signingCredentials,
                     claims: claim
