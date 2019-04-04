@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Erp_Biscuiterie_Back.Business.Context;
 using Erp_Biscuiterie_Back.Business.Models;
+using Erp_Biscuiterie_Back.Utils.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -150,6 +151,33 @@ namespace Erp_Biscuiterie_Back.Controllers
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        
+        // talk maybe one controller for signin and signup
+        [HttpPost("sign-in")]
+        public int SignIn([FromBody] Credentials Credentials)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var pass = Crypto.EncryptPassword("ciao");
+                var user = _context.User.SingleOrDefault(x => x.Email == Credentials.Email);
+                pass = Crypto.EncryptPassword("ciao");
+
+                if (user == null)
+                {
+                    return -1;
+                }
+                if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
+                {
+                    return -1;
+                }
+
+                return user.RoleId;
+            }
+
+            return -1;
         }
     }
 }
