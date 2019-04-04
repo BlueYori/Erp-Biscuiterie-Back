@@ -13,6 +13,6 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public string DepartmentName { get; set; }
         public int ReductionId { get; set; }
 
-        public Reduction Reduction { get; set; }
-        public ICollection<Order> Order { get; set; }
+        public virtual Reduction Reduction { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

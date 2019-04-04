@@ -15,7 +15,7 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public string Name { get; set; }
         public float Price { get; set; }
 
-        public ICollection<OrderDetails> OrderDetails { get; set; }
-        public ICollection<Recipe> Recipe { get; set; }
+        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<Recipe> Recipe { get; set; }
     }
 }
