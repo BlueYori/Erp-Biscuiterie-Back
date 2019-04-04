@@ -53,7 +53,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         public async Task<ActionResult<User>> GetUser(int id)
         {
             // Doc microsoft
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.User.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
 
             /*
              * LINQ Query expressions
