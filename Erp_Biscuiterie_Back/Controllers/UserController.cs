@@ -52,19 +52,16 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            /* Doc microsoft
+            // Doc microsoft
             var user = await _context.User.FindAsync(id);
-
-            
-            */
 
             /*
              * LINQ Query expressions
              */
 
-            var user = await (from p in _context.User
-                                where p.Id == id
-                                select p).FirstAsync();
+            //var user = await (from p in _context.User
+            //                    where p.Id == id
+            //                    select p).FirstAsync();
 
             /*
              * SQL Equivalent
