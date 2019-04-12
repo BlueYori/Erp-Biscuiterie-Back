@@ -161,23 +161,25 @@ namespace Erp_Biscuiterie_Back.Controllers
             
             if (ModelState.IsValid)
             {
-                var pass = Crypto.EncryptPassword("ciao");
                 var user = _context.User.SingleOrDefault(x => x.Email == Credentials.Email);
-                pass = Crypto.EncryptPassword("ciao");
 
                 if (user == null)
                 {
                     return -1;
-                }
+                } 
+
                 if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
                 {
                     return -1;
                 }
 
+                // write token in header
+                Crypto.getToken(user.RoleId);
                 return user.RoleId;
             }
 
             return -1;
         }
+
     }
 }

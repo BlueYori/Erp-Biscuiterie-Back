@@ -34,6 +34,14 @@ namespace Erp_Biscuiterie_Back
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowCredentials();
+            }));
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalValue.SECRETKEY));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -73,6 +81,7 @@ namespace Erp_Biscuiterie_Back
 
             //connection visible everywhere
             ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
