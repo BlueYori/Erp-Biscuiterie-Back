@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Erp_Biscuiterie_Back.Business.Context;
 using Erp_Biscuiterie_Back.Business.Models;
+using Erp_Biscuiterie_Back.Utils.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,26 +27,41 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.User.ToListAsync();
+            /*var userList = await (from user in _context.User
+                                  join role in _context.Role on user.RoleId equals role.Id into tmp
+                                  from m in tmp.DefaultIfEmpty()
+
+                                  select new User
+                                  {
+                                      Id = user.Id,
+                                      Firstname = user.Firstname,
+                                      Lastname = user.Lastname,
+                                      Email = user.Email,
+                                      Password = user.Password,
+                                      RoleId = m.Id,
+                                      Role = m
+                                 }
+                      ).ToListAsync();
+            return userList;*/
+            //var userList = await _context.User.ToListAsync();
+            var userList = await _context.User.Include(user => user.Role).ToListAsync();
+            return userList;
         }
 
         // GET api/user/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            /* Doc microsoft
-            var user = await _context.User.FindAsync(id);
-
-            
-            */
+            // Doc microsoft
+            var user = await _context.User.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
 
             /*
              * LINQ Query expressions
              */
 
-            var user = await (from p in _context.User
-                                where p.Id == id
-                                select p).FirstAsync();
+            //var user = await (from p in _context.User
+            //                    where p.Id == id
+            //                    select p).FirstAsync();
 
             /*
              * SQL Equivalent
@@ -131,6 +148,33 @@ namespace Erp_Biscuiterie_Back.Controllers
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        
+        // talk maybe one controller for signin and signup
+        [HttpPost("sign-in")]
+        public int SignIn([FromBody] Credentials Credentials)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var pass = Crypto.EncryptPassword("ciao");
+                var user = _context.User.SingleOrDefault(x => x.Email == Credentials.Email);
+                pass = Crypto.EncryptPassword("ciao");
+
+                if (user == null)
+                {
+                    return -1;
+                }
+                if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
+                {
+                    return -1;
+                }
+
+                return user.RoleId;
+            }
+
+            return -1;
         }
     }
 }

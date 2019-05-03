@@ -16,8 +16,8 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public float Price { get; set; }
         public int TypeIngredientId { get; set; }
 
-        public TypeIngredient TypeIngredient { get; set; }
-        public ICollection<IngredientDisponibily> IngredientDisponibily { get; set; }
-        public ICollection<Recipe> Recipe { get; set; }
+        public virtual TypeIngredient TypeIngredient { get; set; }
+        public virtual ICollection<IngredientDisponibily> IngredientDisponibily { get; set; }
+        public virtual ICollection<Recipe> Recipe { get; set; }
     }
 }
