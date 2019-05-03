@@ -35,7 +35,7 @@ namespace Erp_Biscuiterie_Back
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:5001").AllowAnyHeader()
+                    builder => builder.WithOrigins("*").AllowAnyHeader()
                     .AllowAnyMethod());
             });
 
