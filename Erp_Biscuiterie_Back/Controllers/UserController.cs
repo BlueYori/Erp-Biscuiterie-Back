@@ -52,19 +52,16 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            /* Doc microsoft
-            var user = await _context.User.FindAsync(id);
-
-            
-            */
+            // Doc microsoft
+            var user = await _context.User.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
 
             /*
              * LINQ Query expressions
              */
 
-            var user = await (from p in _context.User
-                                where p.Id == id
-                                select p).FirstAsync();
+            //var user = await (from p in _context.User
+            //                    where p.Id == id
+            //                    select p).FirstAsync();
 
             /*
              * SQL Equivalent
@@ -156,7 +153,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         
         // talk maybe one controller for signin and signup
         [HttpPost("sign-in")]
-        public int SignIn([FromBody] Credentials Credentials)
+        public User SignIn([FromBody] Credentials Credentials)
         {
             
             if (ModelState.IsValid)
@@ -165,20 +162,20 @@ namespace Erp_Biscuiterie_Back.Controllers
 
                 if (user == null)
                 {
-                    return -1;
+                    return null;
                 } 
 
                 if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
                 {
-                    return -1;
+                    return null;
                 }
 
-                // write token in header
+                // write token in hheader
                 Crypto.getToken(user.RoleId);
-                return user.RoleId;
+                return user;
             }
 
-            return -1;
+            return null;
         }
 
     }
