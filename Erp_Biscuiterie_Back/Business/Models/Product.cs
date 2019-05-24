@@ -8,6 +8,7 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public Product()
         {
             OrderDetails = new HashSet<OrderDetails>();
+            ProductDisponibility = new HashSet<ProductDisponibility>();
             Recipe = new HashSet<Recipe>();
         }
 
@@ -16,6 +17,7 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public float Price { get; set; }
 
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<ProductDisponibility> ProductDisponibility { get; set; }
         public virtual ICollection<Recipe> Recipe { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Erp_Biscuiterie_Back.Business.Context
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ProductDisponibility> ProductDisponibility { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
         public virtual DbSet<Reduction> Reduction { get; set; }
         public virtual DbSet<Role> Role { get; set; }
@@ -174,6 +175,24 @@ namespace Erp_Biscuiterie_Back.Business.Context
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnType("varchar(255)");
+            });
+
+            modelBuilder.Entity<ProductDisponibility>(entity =>
+            {
+                entity.HasIndex(e => e.ProductId)
+                    .HasName("ProductId");
+
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.ProductId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Quantity).HasColumnType("int(11)");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductDisponibility)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("productdisponibility_ibfk_1");
             });
 
             modelBuilder.Entity<Recipe>(entity =>
