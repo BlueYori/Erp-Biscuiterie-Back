@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Erp_Biscuiterie_Back.Business.Context;
 using Erp_Biscuiterie_Back.Business.Models;
@@ -153,7 +154,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         
         // talk maybe one controller for signin and signup
         [HttpPost("sign-in")]
-        public User SignIn([FromBody] Credentials Credentials)
+        public ActionResult<User> SignIn([FromBody] Credentials Credentials)
         {
             
             if (ModelState.IsValid)
@@ -162,12 +163,12 @@ namespace Erp_Biscuiterie_Back.Controllers
 
                 if (user == null)
                 {
-                    return null;
-                } 
+                    return Unauthorized();
+                }
 
                 if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
                 {
-                    return null;
+                    return Unauthorized();
                 }
 
                 // write token in hheader
