@@ -114,6 +114,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            user.Password = Crypto.EncryptPassword(user.Password.ToString());
             _context.Add(user);
             await _context.SaveChangesAsync();
 
