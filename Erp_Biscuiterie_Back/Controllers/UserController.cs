@@ -153,7 +153,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         
         // talk maybe one controller for signin and signup
         [HttpPost("sign-in")]
-        public int SignIn([FromBody] Credentials Credentials)
+        public User SignIn([FromBody] Credentials Credentials)
         {
             
             if (ModelState.IsValid)
@@ -164,17 +164,18 @@ namespace Erp_Biscuiterie_Back.Controllers
 
                 if (user == null)
                 {
-                    return -1;
-                }
+                    return null;
+                } 
+
                 if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
                 {
-                    return -1;
+                    return null;
                 }
 
-                return user.RoleId;
+                return user;
             }
 
-            return -1;
+            return null;
         }
     }
 }
