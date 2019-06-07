@@ -17,7 +17,7 @@ namespace Erp_Biscuiterie_Back.Business.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual ICollection<User> User { get; set; }
 
     }
