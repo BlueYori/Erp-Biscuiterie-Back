@@ -42,6 +42,36 @@ namespace Erp_Biscuiterie_Back.Controllers
             return order;
         }
 
+        // GET: api/Order/joinCustomer
+        [Route("joinCustomer")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrderJoinCustomer()
+        {
+            var user = await _context.Order.ToListAsync();
+
+            var join = (from o in _context.Order
+                        join c in _context.Customer
+                        on o.CustomerId equals c.Id
+                        select new Order
+                        {
+                            Customer = c,
+                            CustomerId = c.Id,
+                            Date = o.Date,
+                            Id = o.Id,
+                            OrderDetails = o.OrderDetails,
+                            State = o.State
+
+
+                        }).ToList();
+
+            if (join == null)
+            {
+                return NotFound();
+            }
+
+            return join;
+        }
+
         // PUT: api/Order/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder(int id, Order order)
