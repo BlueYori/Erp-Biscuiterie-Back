@@ -39,6 +39,14 @@ namespace Erp_Biscuiterie_Back
                     .AllowAnyMethod());
             });
 
+
+            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.AllowCredentials();
+            }));
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalValue.SECRETKEY));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -81,6 +89,8 @@ namespace Erp_Biscuiterie_Back
 
             // Shows UseCors with named policy.
             app.UseCors("AllowSpecificOrigin");
+            ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseHttpsRedirection();

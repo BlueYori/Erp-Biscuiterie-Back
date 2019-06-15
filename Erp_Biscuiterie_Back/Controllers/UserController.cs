@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Erp_Biscuiterie_Back.Business.Context;
 using Erp_Biscuiterie_Back.Business.Models;
@@ -113,7 +114,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            user.Password = Crypto.EncryptPassword(user.Password);
+            user.Password = Crypto.EncryptPassword(user.Password.ToString());
             _context.Add(user);
             await _context.SaveChangesAsync();
 
@@ -154,29 +155,30 @@ namespace Erp_Biscuiterie_Back.Controllers
         
         // talk maybe one controller for signin and signup
         [HttpPost("sign-in")]
-        public User SignIn([FromBody] Credentials Credentials)
+        public ActionResult<User> SignIn([FromBody] Credentials Credentials)
         {
             
             if (ModelState.IsValid)
             {
-                var pass = Crypto.EncryptPassword("ciao");
                 var user = _context.User.SingleOrDefault(x => x.Email == Credentials.Email);
-                pass = Crypto.EncryptPassword("ciao");
 
                 if (user == null)
                 {
-                    return null;
-                } 
+                    return Unauthorized();
+                }
 
                 if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
                 {
-                    return null;
+                    return Unauthorized();
                 }
 
+                // write token in hheader
+                Crypto.getToken(user.RoleId);
                 return user;
             }
 
             return null;
         }
+
     }
 }
