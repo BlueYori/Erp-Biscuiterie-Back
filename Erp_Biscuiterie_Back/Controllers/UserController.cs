@@ -114,7 +114,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            user.Password = Crypto.EncryptPassword(user.Password.ToString());
+            user.Password = Crypto.EncryptPassword(user.Password);
             _context.Add(user);
             await _context.SaveChangesAsync();
 
@@ -160,20 +160,25 @@ namespace Erp_Biscuiterie_Back.Controllers
             
             if (ModelState.IsValid)
             {
-                var user = _context.User.SingleOrDefault(x => x.Email == Credentials.Email);
+                var user = _context.User.Where(x => x.Email == Credentials.Email).FirstOrDefault();
 
                 if (user == null)
                 {
                     return Unauthorized();
                 }
 
-                if (Crypto.EncryptPassword(Credentials.Password) != user.Password)
+                var encryptedPassword = Crypto.EncryptPassword(Credentials.Password);
+
+                if (!string.Equals(encryptedPassword, user.Password, StringComparison.OrdinalIgnoreCase))
                 {
                     return Unauthorized();
                 }
 
-                // write token in hheader
-                Crypto.getToken(user.RoleId);
+                // write token in header
+                // Crypto.getToken(user.RoleId);
+
+
+
                 return user;
             }
 
