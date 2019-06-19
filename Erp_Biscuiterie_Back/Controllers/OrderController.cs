@@ -25,7 +25,7 @@ namespace Erp_Biscuiterie_Back.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
         {
-            return await _context.Order.ToListAsync();
+            return await _context.Order.Include(order => order.OrderDetails).ToListAsync();
         }
 
         // GET: api/Order/5
